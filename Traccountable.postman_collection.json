@@ -1,0 +1,376 @@
+{
+	"info": {
+		"_postman_id": "79103911-db72-4f68-9236-336e18235203",
+		"name": "Traccountable",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Tracks",
+			"item": [
+				{
+					"name": "http://localhost:5000/track/trackId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/track/ff9d7b4c-d728-4160-a7bb-1d37e08f0145",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"track",
+								"ff9d7b4c-d728-4160-a7bb-1d37e08f0145"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5000/track/trackId",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/track/ff9d7b4c-d728-4160-a7bb-1d37e08f0145",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"track",
+								"ff9d7b4c-d728-4160-a7bb-1d37e08f0145"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5000/track/trackId",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"admin1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/track/ff9d7b4c-d728-4160-a7bb-1d37e08f0145",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"track",
+								"ff9d7b4c-d728-4160-a7bb-1d37e08f0145"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Metrics",
+			"item": [
+				{
+					"name": "http://localhost:5000/track/trackId/metric/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Metric1\",\n\t\"units\": \"num\",\n\t\"colour\": \"#ffffff\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/track/eafce792-9609-4834-9595-d27259c9a339/metric/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"track",
+								"eafce792-9609-4834-9595-d27259c9a339",
+								"metric",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5000/track/trackId/metric/metricId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/track/eafce792-9609-4834-9595-d27259c9a339/metric/3dfde52d-1550-4b3b-afd6-e1f029ad7d59",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"track",
+								"eafce792-9609-4834-9595-d27259c9a339",
+								"metric",
+								"3dfde52d-1550-4b3b-afd6-e1f029ad7d59"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5000/track/trackId/metric/metricId",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Metric1\",\n\t\"units\": \"num\",\n\t\"active\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/track/eafce792-9609-4834-9595-d27259c9a339/metric/3dfde52d-1550-4b3b-afd6-e1f029ad7d59",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"track",
+								"eafce792-9609-4834-9595-d27259c9a339",
+								"metric",
+								"3dfde52d-1550-4b3b-afd6-e1f029ad7d59"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5000/track/trackId/metric/metricId",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/track/eafce792-9609-4834-9595-d27259c9a339/metric/3dfde52d-1550-4b3b-afd6-e1f029ad7d59",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"track",
+								"eafce792-9609-4834-9595-d27259c9a339",
+								"metric",
+								"3dfde52d-1550-4b3b-afd6-e1f029ad7d59"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Readings",
+			"item": [
+				{
+					"name": "http://localhost:5000/track/trackId/metric/metricId/reading",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"value\": \"10\",\n\t\"read_at\": \"2020-03-26 10:33:57.172\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/track/eafce792-9609-4834-9595-d27259c9a339/metric/3dfde52d-1550-4b3b-afd6-e1f029ad7d59/reading",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"track",
+								"eafce792-9609-4834-9595-d27259c9a339",
+								"metric",
+								"3dfde52d-1550-4b3b-afd6-e1f029ad7d59",
+								"reading"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5000/track/trackId/metric/metricId/reading/readingId",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"value\": \"11\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/track/eafce792-9609-4834-9595-d27259c9a339/metric/3dfde52d-1550-4b3b-afd6-e1f029ad7d59/reading/03f61035-82ed-44b4-80ce-3f92d87c91b8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"track",
+								"eafce792-9609-4834-9595-d27259c9a339",
+								"metric",
+								"3dfde52d-1550-4b3b-afd6-e1f029ad7d59",
+								"reading",
+								"03f61035-82ed-44b4-80ce-3f92d87c91b8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5000/track/trackId/metric/metricId/reading/readingId",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/track/eafce792-9609-4834-9595-d27259c9a339/metric/3dfde52d-1550-4b3b-afd6-e1f029ad7d59/reading/03f61035-82ed-44b4-80ce-3f92d87c91b8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"track",
+								"eafce792-9609-4834-9595-d27259c9a339",
+								"metric",
+								"3dfde52d-1550-4b3b-afd6-e1f029ad7d59",
+								"reading",
+								"03f61035-82ed-44b4-80ce-3f92d87c91b8"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "http://localhost:5000/auth/signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"admin\",\n\t\"password\": \"admin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/auth/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5000/auth/login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"admin\",\n\t\"password\": \"admin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5000/auth/logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/auth/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

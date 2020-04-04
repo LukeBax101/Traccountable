@@ -1,0 +1,15 @@
+{
+  "short_name": "TA",
+  "name": "Traccountable",
+  "theme_color": "#4a91f2",
+  "background_color": "#3b7dd8",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "public/img/icons/ta-favicon-32x32.png",
+      "type": "image/png",
+      "sizes": "32x32"
+    },
+  ],
+  "start_url": "/."
+}
