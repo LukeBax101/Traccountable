@@ -39,7 +39,7 @@ function authMiddleware(req, res, next) {
 }
 
 
-app.use('/', express.static(__dirname + '../frontend/dist'));
+app.use('/', express.static(path.join(__dirname, '../frontend/dist'));
 app.use('/auth', auth);
 app.use('/track/:trackId', authMiddleware, (req, res, next) => {
     req.trackId = req.params.trackId;
