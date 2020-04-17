@@ -1,5 +1,10 @@
 export const state = {
   metrics: {},
+  shares: {
+    incoming: {},
+    outgoing: {},
+    accepted: {},
+  },
   validUnits: [
     { value: 'cm', text: 'Centimeters' },
     { value: 'm', text: 'Meters' },
@@ -10,6 +15,9 @@ export const state = {
     { value: 'lb', text: 'Pounds (weight)' },
     { value: 'GBP', text: 'Pound Sterling' },
     { value: 'inches', text: 'Inches' },
+    { value: 'sec', text: 'Seconds' },
+    { value: 'min', text: 'Minutes' },
+    { value: 'hr', text: 'Hours' },
     { value: 'reps', text: 'Reps' },
     { value: 'qty', text: 'Qty' },
     { value: 'tod', text: 'Time of Day' },

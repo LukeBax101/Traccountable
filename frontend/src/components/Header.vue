@@ -1,15 +1,13 @@
 <template>
-  <transition name="slide-down" mode="out-in" appear>
-    <div class="header">
-      <button v-if="leftIcon" class="button left" v-on:click="leftClicked">
-        <b-icon :scale="leftScale" :icon="leftIcon"></b-icon>
-      </button>
-      <h3 class="title">{{ title }}</h3>
-      <button v-if="rightIcon" class="button right" v-on:click="rightClicked">
-        <b-icon :scale="rightScale" :icon="rightIcon"></b-icon>
-      </button>
-    </div>
-  </transition>
+  <div class="header" :key="title">
+    <button v-if="leftIcon" class="button left" v-on:click="leftClicked">
+      <b-icon :scale="leftScale" :icon="leftIcon"></b-icon>
+    </button>
+    <h3 class="title">{{ title }}</h3>
+    <button v-if="rightIcon" class="button right" v-on:click="rightClicked">
+      <b-icon :scale="rightScale" :icon="rightIcon"></b-icon>
+    </button>
+  </div>
 </template>
 
 <script>
@@ -80,16 +78,20 @@ h3 {
   color: $off-white;
   align-self: center;
   letter-spacing: 0.08em;
+  font-variant: small-caps;
 }
 
-.slide-down-enter-active {
+.slide-in-enter-active {
   transition: all .8s ease;
 }
-.slide-down-leave-active {
+.slide-in-leave-active {
   transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
-.slide-down-enter, .slide-down-leave-to
-/* .slide-fade-leave-active below version 2.1.8 */ {
-  transform: translateY(-50px);
+.slide-in-enter {
+  transform: translateX(100%);
+}
+
+.slide-in-leave-to {
+  transform: translateX(-100%);
 }
 </style>

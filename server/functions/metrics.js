@@ -1,8 +1,4 @@
-const { Metric, Reading } = require('../db/models');
-// const { deleteTeam } = require('./teams');
-// const fs = require('fs');
-// const path = require('path');
-// const bcrypt = require('bcrypt');
+const { Metric, Reading, Share } = require('../db/models');
 
 async function addMetric(trackId, req) {
     if (trackId && req && req.name && req.units && req.colour) {
@@ -25,10 +21,19 @@ async function deleteMetric(metricId) {
       const readingFetch = await Reading.where({ ['metric_id']: metricId }).fetchAll();
       const readings = readingFetch.toJSON();
 
-      const allDeleted = await Promise.all(readings.map(async (reading) => {
+      const allReadingDeleted = await Promise.all(readings.map(async (reading) => {
          const deleted = await Reading.where({ ['reading_id']: reading.reading_id }).destroy({ require: true});
          return deleted;
       }));
+
+      const shareFetch = await Share.where({ ['metric_id']: metricId }).fetchAll();
+      const shares = shareFetch.toJSON();
+
+      const allShareDeleted = await Promise.all(shares.map(async (share) => {
+         const deleted = await Share.where({ ['share_id']: share.share_id }).destroy({ require: true});
+         return deleted;
+      }));
+
       const metricDelete = await Metric.where({ ['metric_id']: metricId }).destroy({ require: true});
       return 'Successfully deleted metric';
     } else {

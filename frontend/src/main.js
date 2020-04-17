@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueSocketIOExt from 'vue-socket.io-extended';
+import VuePageTransition from 'vue-page-transition';
 import socketio from 'socket.io-client';
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
 import axios from 'axios';
@@ -25,6 +26,7 @@ export const socket = socketio(SOCKET_URL, {
 Vue.use(VueSocketIOExt, socket, { store });
 Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);
+Vue.use(VuePageTransition);
 
 Vue.use(Verte, {
   recentColors: JSON.parse(localStorage.getItem('colors')),

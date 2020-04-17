@@ -1,12 +1,10 @@
 <template>
-  <transition name="slide-in" mode="out-in" appear>
     <button
       class="float-button"
       v-on:click="() => clicked()"
     >
       <b-icon scale="2" :icon="icon"></b-icon>
     </button>
-</transition>
 </template>
 
 <script>
@@ -37,6 +35,7 @@ export default {
   border-radius: 50%;
   background: $scheme-dark;
   color: white;
+  box-shadow: 1px 5px 10px 3px rgba(130,130,130,0.5);
 }
 
 .slide-in-enter-active {
@@ -45,8 +44,7 @@ export default {
 .slide-in-leave-active {
   transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
-.slide-in-enter, .slide-in-leave-to
-/* .slide-fade-leave-active below version 2.1.8 */ {
-  transform: translateX(50px);
+.slide-in-enter, .slide-in-leave-to {
+  transform: scale(0.5);
 }
 </style>

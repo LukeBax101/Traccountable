@@ -1,17 +1,15 @@
 <template>
-  <transition name="slide-up" mode="out-in" appear>
-    <div class="nav-bar">
-      <button
-        v-for="(icon, idx) in icons"
-        class="nav-bar-button"
-        v-on:click="() => clicked(idx)"
-        v-bind:class="{ 'selected': idx === selected}"
-        :key="idx"
-      >
-        <b-icon scale="1.2" :icon="icon"></b-icon>
-      </button>
-    </div>
-  </transition>
+  <div class="nav-bar">
+    <button
+      v-for="(icon, idx) in icons"
+      class="nav-bar-button"
+      v-on:click="() => clicked(idx)"
+      v-bind:class="{ 'selected': idx === selected}"
+      :key="idx"
+    >
+      <b-icon scale="1.2" :icon="icon"></b-icon>
+    </button>
+  </div>
 </template>
 
 <script>
@@ -71,8 +69,7 @@ export default {
 .slide-up-leave-active {
   transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
-.slide-up-enter, .slide-up-leave-to
-/* .slide-fade-leave-active below version 2.1.8 */ {
+.slide-up-enter, .slide-up-leave-to {
   transform: translateY(50px);
 }
 </style>

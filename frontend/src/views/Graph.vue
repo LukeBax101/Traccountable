@@ -11,17 +11,13 @@
       ></Header>
       <div class="readings-list">
         <Chart v-if="activeMetrics.length > 0" :data="activeMetrics"></Chart>
+        <div class="placeholder" v-else>
+          <span class="placeholder-text">
+          Hmmm, it looks like you've got no metrics currently active,
+           try turning one on to see your data!
+         </span>
+        </div>
       </div>
-      <FloatButton
-        icon="plus"
-        v-on:float-button-clicked="$bvModal.show('new-reading-modal')"
-      >
-      </FloatButton>
-      <NavBar
-        :icons="navBarIcons"
-        :selected="0"
-        v-on:nav-bar-clicked="navBarClicked"
-      ></NavBar>
     </b-overlay>
     <Modal
       id = "new-reading-modal"
@@ -36,8 +32,6 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import Header from '@/components/Header.vue';
-import NavBar from '@/components/NavBar.vue';
-import FloatButton from '@/components/FloatButton.vue';
 import Chart from '@/components/Chart.vue';
 import Modal from '@/components/Modal.vue';
 
@@ -46,8 +40,6 @@ export default {
   name: 'Graph',
   components: {
     Header,
-    NavBar,
-    FloatButton,
     Chart,
     Modal,
   },
@@ -56,7 +48,6 @@ export default {
       loading: false,
       periodicCheck: 0,
       circle: () => 'Circle',
-      navBarIcons: ['graph-up', 'card-list', 'gear'],
       datacollection: null,
     };
   },
@@ -67,18 +58,22 @@ export default {
       'metrics',
     ]),
     newReadingModal() {
+      const date = new Date(Date.now());
+      const today = `${date.getUTCFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
       return [{
         id: 'reading_at_date',
         label: 'Date',
         invalidFeedback: 'Please select a date',
         isValid: (id) => (!!id),
         type: 'date',
+        default: today,
       },
       {
         id: 'reading_at_time',
         label: 'Time',
         isValid: () => true,
         type: 'time',
+        optional: 'specific time?',
       },
       {
         id: 'metric_id',
@@ -102,7 +97,7 @@ export default {
   },
   async mounted() {
     this.load();
-    this.periodicCheck = setInterval(this.getAllActiveData, 60000);
+    this.periodicCheck = setInterval(this.getAllActiveData, 600000);
   },
   destroyed() {
     clearInterval(this.periodicCheck);
@@ -112,20 +107,12 @@ export default {
       'getAllActiveData',
       'addReading',
     ]),
-    navBarClicked(idx) {
-      if (idx === 1) {
-        this.$router.push('/legend');
-      } else if (idx === 2) {
-        this.$router.push('/settings');
-      }
-    },
     async load() {
       this.loading = true;
       await this.getAllActiveData();
       this.loading = false;
     },
     addReadings(vals) {
-      console.log(vals);
       const readAt = `${vals.reading_at_date}T${vals.reading_at_time || '12:00:00'}.000Z`;
       this.addReading({
         metric_id: vals.metric_id,
@@ -142,17 +129,32 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
 }
 
 .readings-list {
   height: calc(100% - 100px);
+  background-color: $app-background;
 }
 
 .overlay{
   width: 100%;
   height: 100%;
   color: $overlay-load;
+}
+
+.placeholder{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.placeholder-text {
+  width: 60%;
+  font-weight: 200;
+  color: rgba(100,100,100,0.4);
+  text-overflow: clip;
 }
 
 </style>

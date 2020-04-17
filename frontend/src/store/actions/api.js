@@ -104,6 +104,7 @@ async function deleteTrack({ commit }) {
       await axios.get(`${API_URL}/auth/logout`);
     }
     commit('setUsernameMutation');
+    commit('logout');
   } catch (e) {
     if (e.response.status === 401) {
       router.push('/');
@@ -249,6 +250,118 @@ async function deleteReading({ commit }, data) {
   }
 }
 
+async function addShare({ commit }, data) {
+  try {
+    if (localStorage.getItem('trackId')) {
+      const req = await axios.post(`${API_URL}/track/${localStorage.trackId}/metric/${data.metric_id}/shares`, {
+        username: data.username,
+      });
+      commit('selfShare', req.data);
+    } else {
+      router.push('/');
+      commit('setUsernameMutation');
+    }
+  } catch (e) {
+    if (e.response.status === 401) {
+      router.push('/');
+      commit('setTrackIdMutation');
+      commit('setUsernameMutation');
+    } else {
+      EventBus.$emit('show-alert', { text: `Error: ${e.response.data}` });
+    }
+  }
+}
+
+async function acceptShare({ commit }, data) {
+  try {
+    if (localStorage.getItem('trackId')) {
+      const req = await axios.put(`${API_URL}/track/${localStorage.trackId}/metric/${data.metric_id}/shares`, {
+        accepted: true,
+      });
+      commit('selfAccept', req.data);
+    } else {
+      router.push('/');
+      commit('setUsernameMutation');
+    }
+  } catch (e) {
+    if (e.response.status === 401) {
+      router.push('/');
+      commit('setTrackIdMutation');
+      commit('setUsernameMutation');
+    } else {
+      EventBus.$emit('show-alert', { text: `Error: ${e.response.data}` });
+    }
+  }
+}
+
+
+async function updateShare({ commit }, data) {
+  try {
+    if (localStorage.getItem('trackId')) {
+      const req = await axios.patch(`${API_URL}/track/${localStorage.trackId}/metric/${data.metric_id}/shares`, data);
+      commit('updateShare', req.data);
+    } else {
+      router.push('/');
+      commit('setUsernameMutation');
+    }
+  } catch (e) {
+    if (e.response.status === 401) {
+      router.push('/');
+      commit('setTrackIdMutation');
+      commit('setUsernameMutation');
+    } else {
+      EventBus.$emit('show-alert', { text: `Error: ${e.response.data}` });
+    }
+  }
+}
+
+
+async function deleteShare({ commit }, data) {
+  try {
+    if (localStorage.getItem('trackId')) {
+      await axios.delete(`${API_URL}/track/${localStorage.trackId}/metric/${data.metric_id}/shares`, {
+        data: (data.share_username !== localStorage.getItem('username')) ? { username: data.share_username } : {},
+      });
+      commit('deleteShare', {
+        metric_id: data.metric_id,
+        share_username: data.share_username,
+        owner_username: data.owner_username,
+      });
+    } else {
+      router.push('/');
+      commit('setUsernameMutation');
+    }
+  } catch (e) {
+    if (e.response.status === 401) {
+      router.push('/');
+      commit('setTrackIdMutation');
+      commit('setUsernameMutation');
+    } else {
+      EventBus.$emit('show-alert', { text: `Error: ${e.response.data}` });
+    }
+  }
+}
+
+async function getShares({ commit }) {
+  try {
+    if (localStorage.getItem('trackId')) {
+      const req = await axios.get(`${API_URL}/track/${localStorage.trackId}/shares`);
+      commit('updateAllShares', req.data);
+    } else {
+      router.push('/');
+      commit('setUsernameMutation');
+    }
+  } catch (e) {
+    if (e.response.status === 401) {
+      router.push('/');
+      commit('setTrackIdMutation');
+      commit('setUsernameMutation');
+    } else {
+      EventBus.$emit('show-alert', { text: `Error: ${e.response.data}` });
+    }
+  }
+}
+
 
 async function login({ commit }, data) {
   try {
@@ -281,7 +394,7 @@ async function signup({ commit }, data) {
       commit('setTrackIdMutation', req.data.track_id);
       commit('setUsernameMutation', req.data.username);
       EventBus.$emit('show-alert', { text: 'Signup Successful', type: 'success' });
-      router.push('/graph');
+      router.push('/legend');
     }
   } catch (e) {
     EventBus.$emit('show-alert', { text: `Error: ${e.response.data}` });
@@ -292,6 +405,7 @@ async function logout({ commit }) {
   try {
     const req = await axios.get(`${API_URL}/auth/logout`);
     if (req.status === 200) {
+      commit('logout');
       commit('setTrackIdMutation');
       commit('setUsernameMutation');
       EventBus.$emit('show-alert', { text: 'Logout Successful', type: 'success' });
@@ -343,6 +457,11 @@ export const api = {
   addReading,
   updateReading,
   deleteReading,
+  addShare,
+  acceptShare,
+  updateShare,
+  deleteShare,
+  getShares,
   login,
   signup,
   logout,

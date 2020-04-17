@@ -15,111 +15,120 @@
           :label-for="field.id"
           :invalid-feedback="field.invalidFeedback"
           :key="field.id"
-          :class="{ inline: field.type === 'colour' }"
+          :class="{ inline: field.type === 'colour' || field.optional }"
         >
-          <div v-if="field.type === 'password'" class="password-entry">
-            <b-form-input
-              :id="field.id"
-              :value="values[field.id]"
-              :type="calcType(field.id, field.type)"
-              :state="validity[field.id]"
-              required
-              :autofocus="idx === 0"
-              v-on:update="(val) => fieldUpdated(field.id, val)"
-            >
-            </b-form-input>
-            <b-icon
-              scale="1.3"
-              class="password-eye"
-              :icon="(passwordState[field.id]) ? 'eye-fill' : 'eye-slash-fill'"
-              v-on:click.prevent.stop="passwordState[field.id] = !passwordState[field.id]"
-              ></b-icon>
+          <div
+            class="optional"
+            v-if="field.optional"
+            v-on:click="togggleOptional(field.id)"
+          >
+            {{ optional[field.id] ? 'Add ' : 'Remove ' }}{{ field.optional }}
           </div>
-          <div class="colour-picker" v-else-if="field.type === 'colour'">
-            <verte
-              :id="field.id"
-              picker="wheel"
-              model="hex"
-              :enableAlpha="false"
-              :value="values[field.id]"
-              v-on:input="(val) => fieldUpdated(field.id, val)"
-              menuPosition="center"
-              :draggable="false"
-            >
-            </verte>
-          </div>
-          <div v-else-if="field.type === 'date'">
-            <b-form-datepicker
-              :id="field.id"
-              :value="values[field.id]"
-              v-on:input="(val) => fieldUpdated(field.id, val)"
-              :max="max"
-              :state="validity[field.id]"
-              class="mb-2"
-              today-button
-              reset-button
-              close-button
-            ></b-form-datepicker>
-          </div>
-          <div v-else-if="field.type === 'time'">
-            <b-form-timepicker
-              :id="field.id"
-              :value="values[field.id]"
-              v-on:input="(val) => fieldUpdated(field.id, val)"
-              :state="validity[field.id]"
-              class="mb-2"
-              placeholder="No time selected (Optional)"
-              now-button
-              reset-button
-            ></b-form-timepicker>
-          </div>
-          <div v-else-if="field.type === 'dropdown'">
-            <b-form-select
-              :id="field.id"
-              :value="values[field.id]"
-              :options="field.options"
-              v-on:input="(val) => fieldUpdated(field.id, val)"
-              :state="validity[field.id]"
-            ></b-form-select>
-          </div>
-          <div v-else-if="field.type === 'unit'">
-            <div class="unit-entry"  v-if="unit !== 'tod'">
+          <div v-if="!optional[field.id]">
+            <div v-if="field.type === 'password'" class="password-entry">
               <b-form-input
                 :id="field.id"
                 :value="values[field.id]"
-                type="number"
-                step="0.00000001"
-                v-on:update="(val) => fieldUpdated(field.id, val)"
+                :type="calcType(field.id, field.type)"
                 :state="validity[field.id]"
                 required
-              ></b-form-input>
-              <div class="unit" v-if="unit">
-                {{ unit }}
-              </div>
+                :autofocus="idx === 0"
+                v-on:update="(val) => fieldUpdated(field.id, val)"
+              >
+              </b-form-input>
+              <b-icon
+                scale="1.3"
+                class="password-eye"
+                :icon="(passwordState[field.id]) ? 'eye-fill' : 'eye-slash-fill'"
+                v-on:click.prevent.stop="passwordState[field.id] = !passwordState[field.id]"
+                ></b-icon>
             </div>
-            <div v-else>
+            <div class="colour-picker" v-else-if="field.type === 'colour'">
+              <verte
+                :id="field.id"
+                picker="wheel"
+                model="hex"
+                :enableAlpha="false"
+                :value="values[field.id]"
+                v-on:input="(val) => fieldUpdated(field.id, val)"
+                menuPosition="center"
+                :draggable="false"
+              >
+              </verte>
+            </div>
+            <div v-else-if="field.type === 'date'">
+              <b-form-datepicker
+                :id="field.id"
+                :value="values[field.id]"
+                v-on:input="(val) => fieldUpdated(field.id, val)"
+                :max="max"
+                :state="validity[field.id]"
+                class="mb-2"
+                today-button
+                reset-button
+                close-button
+              ></b-form-datepicker>
+            </div>
+            <div v-else-if="field.type === 'time'">
               <b-form-timepicker
                 :id="field.id"
                 :value="values[field.id]"
                 v-on:input="(val) => fieldUpdated(field.id, val)"
                 :state="validity[field.id]"
                 class="mb-2"
+                placeholder="No time selected (Optional)"
                 now-button
                 reset-button
               ></b-form-timepicker>
             </div>
+            <div v-else-if="field.type === 'dropdown'">
+              <b-form-select
+                :id="field.id"
+                :value="values[field.id]"
+                :options="field.options"
+                v-on:input="(val) => fieldUpdated(field.id, val)"
+                :state="validity[field.id]"
+              ></b-form-select>
+            </div>
+            <div v-else-if="field.type === 'unit'">
+              <div class="unit-entry"  v-if="unit !== 'tod'">
+                <b-form-input
+                  :id="field.id"
+                  :value="values[field.id]"
+                  type="number"
+                  step="0.00000001"
+                  v-on:update="(val) => fieldUpdated(field.id, val)"
+                  :state="validity[field.id]"
+                  required
+                ></b-form-input>
+                <div class="unit" v-if="unit">
+                  {{ unit }}
+                </div>
+              </div>
+              <div v-else>
+                <b-form-timepicker
+                  :id="field.id"
+                  :value="timeOfDayValue"
+                  v-on:input="(val) => fieldUpdated(field.id, val)"
+                  :state="validity[field.id]"
+                  class="mb-2"
+                  now-button
+                  reset-button
+                ></b-form-timepicker>
+              </div>
+            </div>
+            <b-form-input
+              v-else
+              :id="field.id"
+              :value="values[field.id]"
+              :type="field.type"
+              :state="validity[field.id]"
+              required
+              :autofocus="idx === 0"
+              v-on:update="(val) => fieldUpdated(field.id, val)"
+            >
+            </b-form-input>
           </div>
-          <b-form-input
-            v-else
-            :id="field.id"
-            :value="values[field.id]"
-            :type="field.type"
-            :state="validity[field.id]"
-            required
-            :autofocus="idx === 0"
-            v-on:update="(val) => fieldUpdated(field.id, val)"
-          >
-          </b-form-input>
         </b-form-group>
       </form>
     </b-modal>
@@ -146,6 +155,7 @@ export default {
       date: null,
       values: {},
       validity: {},
+      optional: {},
       passwordState: {},
     };
   },
@@ -156,6 +166,14 @@ export default {
         return val !== 'none' ? val : null;
       }
       return null;
+    },
+    timeOfDayValue() {
+      if (this.values && this.values.value) {
+        const mins = this.values.value % 60;
+        const hours = Math.floor(this.values.value / 60);
+        return `${hours}:${mins}:00`;
+      }
+      return '';
     },
   },
   mounted() {
@@ -181,6 +199,13 @@ export default {
       Object.entries(initialFields).forEach(([key, val]) => {
         Vue.set(this.values, key, val);
       });
+      const optionalFields = this.fields.reduce((acc, field) => ({
+        ...acc,
+        [field.id]: !!field.optional,
+      }), {});
+      Object.entries(optionalFields).forEach(([key, val]) => {
+        Vue.set(this.optional, key, val);
+      });
     },
     calcInitialPasswordState() {
       return this.fields.reduce((acc, field) => (field.type === 'password' ? ({
@@ -189,12 +214,24 @@ export default {
       }) : acc), {});
     },
     fieldUpdated(id, val) {
-      Vue.set(this.values, id, val);
+      if (this.unit === 'tod' && id === 'value') {
+        const timeVals = val.split(':');
+        const hours = Number(timeVals[0]);
+        const mins = Number(timeVals[1]);
+        Vue.set(this.values, id, (hours * 60) + mins);
+      } else {
+        Vue.set(this.values, id, val);
+      }
       if (this.validity[id] === false) {
         this.validity[id] = this.fields.filter((field) => field.id === id)[0].isValid(val);
       }
       if (id === 'metric_id') {
-        this.values.value = null;
+        if (this.unit === 'tod') {
+          const date = new Date(Date.now());
+          Vue.set(this.values, 'value', (date.getHours() * 60) + date.getMinutes());
+        } else {
+          Vue.set(this.values, 'value', null);
+        }
         this.validity.value = null;
       }
     },
@@ -221,6 +258,9 @@ export default {
       this.$nextTick(() => {
         this.$bvModal.hide(this.id);
       });
+    },
+    togggleOptional(id) {
+      Vue.set(this.optional, id, !this.optional[id]);
     },
   },
 };
@@ -255,5 +295,11 @@ export default {
 
 .unit {
   margin-left: 10px;
+}
+
+.optional {
+  margin-left: 20px;
+  font-style: oblique;
+text-decoration: underline;
 }
 </style>
